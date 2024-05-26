@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/b0e4c139df.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="music-player">
+        <nav>
+          <div class="circle">
+            <i class="fa-solid fa-angle-left"></i>
+          </div>  
+          <div class="circle">
+            <i class="fa-solid fa-bars"></i>
+          </div>  
+        </nav>
+        <img src="media/468-thumbnail.png" class="song-img">
+        <h1>Reminder</h1>
+        <p>The Weeknd</p>
+        <audio id="song">
+          <source src="media/The Weeknd - Reminder (Official Video).mp3" type="audio/mpeg">
+        </audio>
+        <input type="range" value="0" id="progress">
+        <div class="controls">
+          <div><i class="fa-solid fa-backward"></i></div>
+          <div onclick="playPause()"><i class="fa-solid fa-play" id="ctrlIcon"></i></div> 
+          <div><i class="fa-solid fa-forward"></i></div>  
+        </div>
+      </div>
+    </div>
+    <script>
+      let progress = document.getElementById("progress");
+      let song = document.getElementById("song");
+      let ctrlIcon = document.getElementById("ctrlIcon");
+
+      song.onloadedmetadata = function(){
+        progress.max = song.duration;
+        progress.value = song.currentTime;
+      }
+
+      function playPause(){
+        if (ctrlIcon.classList.contains("fa-play")) {
+          song.play();
+          ctrlIcon.classList.remove("fa-play");
+          ctrlIcon.classList.add("fa-pause");
+        } else {
+          song.pause();
+          ctrlIcon.classList.remove("fa-pause");
+          ctrlIcon.classList.add("fa-play");
+        }
+      }
+
+      setInterval(()=>{
+        progress.value = song.currentTime;
+      }, 500);
+      
+      progress.addEventListener("input", function(){
+        song.currentTime = progress.value;
+      });
+    </script>
+  </body>
+</html>
